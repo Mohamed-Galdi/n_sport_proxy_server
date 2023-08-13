@@ -7,7 +7,7 @@ import cors from "cors"; // Import Cors for handling cross-origin requests
 const app = express();
 
 // Define the port on which the server will run
-const port = 5000;
+const port =  3000;
 
 // Use Cors middleware to allow cross-origin requests
 app.use(cors());
@@ -140,3 +140,6 @@ app.get("/news", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
+
+// Export the Express API
+module.exports = app
