@@ -10,9 +10,6 @@
     "start": "node proxy_server"
   },
   "keywords": [],
-  "engines": {
-    "node": "18.x"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
