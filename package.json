@@ -6,9 +6,13 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vercel-build": "echo hello"
+    "vercel-build": "echo hello",
+    "start": "node proxy_server"
   },
   "keywords": [],
+  "engines": {
+    "node": "18.x"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
