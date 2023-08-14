@@ -2,6 +2,8 @@
 import express from "express"; // Import the Express framework
 import axios from "axios"; // Import Axios for making HTTP requests
 import cors from "cors"; // Import Cors for handling cross-origin requests
+const { v4 } = require("uuid");
+
 
 // Create an Express app
 const app = express();
@@ -12,8 +14,17 @@ const port =  3000;
 // Use Cors middleware to allow cross-origin requests
 app.use(cors());
 
+/////////////////////////////////////////////////////////
+app.get("/api", (req, res) => {
+  const path = `/api/item/${v4()}`;
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+});
+////////////////////////////////////////////////////////
+
 // Define a route for fetching current matchday matches based on a competition
-app.get("/matches", async (req, res) => {
+app.get("/api/matches", async (req, res) => {
   const competition = req.query.competition; // Extract the competition query parameter from the request
 
   try {
@@ -50,7 +61,7 @@ app.get("/matches", async (req, res) => {
 });
 
 // Define a route for fetching details of a specific match using its ID
-app.get("/matchDetails", async (req, res) => {
+app.get("/api/matchDetails", async (req, res) => {
   const id = req.query.id; // Extract the id query parameter from the request
 
   try {
@@ -74,7 +85,7 @@ app.get("/matchDetails", async (req, res) => {
 });
 
 // Define a route for fetching standings of a specific competition
-app.get("/standings", async (req, res) => {
+app.get("/api/standings", async (req, res) => {
   const competition = req.query.competition; // Extract the competition query parameter from the request
   try {
     // Make a GET request to the football data API to fetch standings of the specific competition
@@ -97,7 +108,7 @@ app.get("/standings", async (req, res) => {
 });
 
 // Define a route for fetching scorers of a specific competition
-app.get("/scorers", async (req, res) => {
+app.get("/api/scorers", async (req, res) => {
   const competition = req.query.competition; // Extract the competition query parameter from the request
   try {
     // Make a GET request to the football data API to fetch scorers of the specific competition
@@ -120,7 +131,7 @@ app.get("/scorers", async (req, res) => {
 });
 
 // Define a route for fetching football news in arabic
-app.get("/news", async (req, res) => {
+app.get("/api/news", async (req, res) => {
   try {
     // Make a GET request to the football data API to fetch scorers of the specific competition
     const response = await axios.get(
