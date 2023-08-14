@@ -2,6 +2,7 @@
 import express from "express"; // Import the Express framework
 import axios from "axios"; // Import Axios for making HTTP requests
 import cors from "cors"; // Import Cors for handling cross-origin requests
+import dotenv from "dotenv"; // Envirenment Variables
 
 // Create an Express app
 const app = express();
@@ -12,6 +13,8 @@ const port = process.env.PORT || 8080 ;
 // Use Cors middleware to allow cross-origin requests
 app.use(cors());
 
+// Envirenment Variables
+dotenv.config();
 
 // Define a route for fetching current matchday matches based on a competition
 app.get("/api/matches", async (req, res) => {
@@ -20,12 +23,10 @@ app.get("/api/matches", async (req, res) => {
   try {
     // Make a GET request to the football data API to fetch matches for the specified competition
     const response = await axios.get(
-      "https://api.football-data.org/v4/competitions/" +
-        competition +
-        "/matches",
+      `${process.env.FOOTBALL_API_URL}/competitions/${competition}/matches`,
       {
         headers: {
-          "X-Auth-Token": "eb4c3705e0174cf6ae84847c5968441f", // Add authentication token in the headers
+                    "X-Auth-Token": process.env.FOOTBALL_API_KEY, // Add authentication token in the headers
         },
       }
     );
@@ -57,10 +58,10 @@ app.get("/api/matchDetails", async (req, res) => {
   try {
     // Make a GET request to the football data API to fetch details of the specified match
     const response = await axios.get(
-      `https://api.football-data.org/v4/matches/${id}`,
+      `${process.env.FOOTBALL_API_URL}/matches/${id}`,
       {
         headers: {
-          "X-Auth-Token": "eb4c3705e0174cf6ae84847c5968441f", // Add authentication token in the headers
+          "X-Auth-Token": process.env.FOOTBALL_API_KEY, // Add authentication token in the headers
         },
       }
     );
@@ -80,10 +81,10 @@ app.get("/api/standings", async (req, res) => {
   try {
     // Make a GET request to the football data API to fetch standings of the specific competition
     const response = await axios.get(
-      `https://api.football-data.org/v4/competitions/${competition}/standings`,
+      `${process.env.FOOTBALL_API_URL}/competitions/${competition}/standings`,
       {
         headers: {
-          "X-Auth-Token": "eb4c3705e0174cf6ae84847c5968441f", // Add authentication token in the headers
+          "X-Auth-Token": process.env.FOOTBALL_API_KEY, // Add authentication token in the headers
         },
       }
     );
@@ -103,10 +104,10 @@ app.get("/api/scorers", async (req, res) => {
   try {
     // Make a GET request to the football data API to fetch scorers of the specific competition
     const response = await axios.get(
-      `https://api.football-data.org/v4/competitions/${competition}/scorers`,
+      `${process.env.FOOTBALL_API_URL}/competitions/${competition}/scorers`,
       {
         headers: {
-          "X-Auth-Token": "eb4c3705e0174cf6ae84847c5968441f", // Add authentication token in the headers
+          "X-Auth-Token": process.env.FOOTBALL_API_KEY, // Add authentication token in the headers
         },
       }
     );
@@ -125,7 +126,7 @@ app.get("/api/news", async (req, res) => {
   try {
     // Make a GET request to the football data API to fetch scorers of the specific competition
     const response = await axios.get(
-      `https://newsapi.org/v2/everything?q=football&language=ar&sortBy=publishedAt&apiKey=c9a59498647945f99395443f60d73071`
+      `${process.env.NEWS_API_URL}/everything?q=football&language=ar&sortBy=publishedAt&apiKey=${process.env.NEWS_API_KEY}`
     );
     res.json(response.data);
   } catch (error) {
