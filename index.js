@@ -126,7 +126,7 @@ app.get("/api/news", async (req, res) => {
   try {
     // Make a GET request to the football data API to fetch scorers of the specific competition
     const response = await axios.get(
-      `${process.env.NEWS_API_URL}/everything?q=football&language=ar&sortBy=publishedAt&pageSize=9&apiKey=${process.env.NEWS_API_KEY}`
+      `${process.env.NEWS_API_URL}/everything?q=football&language=ar&sortBy=publishedAt&pageSize=12&apiKey=${process.env.NEWS_API_KEY}`
     );
     res.json(response.data);
   } catch (error) {
