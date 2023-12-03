@@ -32,16 +32,21 @@ app.get("/api/matches", async (req, res) => {
     );
 
     // Extract the current matchday and all matches from the API response
-    const matchDay = response.data.matches[0].season.currentMatchday;
+    const currentRound = response.data.matches[0].season.currentMatchday;
+    const totalRounds = response.data.matches[response.data.matches.length - 1].matchday;
     const allMatches = response.data.matches;
 
     // Filter out only the matches for the current matchday
-    const currentMatchdayMatches = allMatches.filter(
-      (match) => match.matchday === matchDay
-    );
+    // const currentMatchdayMatches = allMatches.filter(
+    //   (match) => match.matchday === matchDay
+    // );
 
     // Send the filtered matches as a JSON response
-    res.json(currentMatchdayMatches);
+    res.json({
+      totalRounds: totalRounds,
+      currentRound: currentRound,
+      allMatches: allMatches,
+    });
   } catch (error) {
     // Handle errors by logging and sending an error response
     console.error("Error fetching data:", error.message);
